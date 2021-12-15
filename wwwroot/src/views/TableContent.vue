@@ -61,7 +61,6 @@ export default {
 
         deleteCategory() {
             console.log(this.idItem);
-            
         }
     },
 }
