@@ -144,7 +144,7 @@ export default {
     cursor: pointer;
     border-radius: 4px;
     padding: 8px 8px;
-    width: 100%;
+    width: 300px;
 }
 .option-item:hover {
     background-color: #F5F5F5;

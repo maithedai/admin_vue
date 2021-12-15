@@ -37,6 +37,11 @@ Vue.use(Confirm);
 import PopupLoading from "@/plugins/popupLoading/index.js";
 Vue.use(PopupLoading);
 
+// axios
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+Vue.use(VueAxios, axios)
+
 // event bus
 Vue.prototype.$eventBus = new Vue();
 

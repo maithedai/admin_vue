@@ -3,14 +3,18 @@
     <div class="topbar">
       <div class="title">List Category</div>
       <div class="top-action">
-        <div class="col-lg-5 col-md-4 pl-0">
-          <SearchInput placeholder="Search Category..." v-model="searchText"></SearchInput>
+        <div class="nav-input-right">
+          <!-- <SearchInput placeholder="Search Category..." v-model="searchText"></SearchInput> -->
+          <Input fieldName="category" placeholder="Category..." v-model="categoryData.category"/>
         </div>
-
         <div class="float-right">
-          <button class="d-btn d-btn-icon d-btn-primary" @click="goto('/add_category')">
+          <button class="d-btn d-btn-icon d-btn-success" @click="saveData()">
             <i class="el-icon-plus" />
-            Add Category
+            Add
+          </button>
+          <button class="d-btn d-btn-icon d-btn-danger" @click="deleteData()">
+            <i class="el-icon-delete" />
+            Delete
           </button>
         </div>
       </div>
@@ -18,6 +22,7 @@
 
     <div class="content mt-3">
       <!-- <datatable title="List Category" :columns="tableColumns1" :rows="tableRows1" /> -->
+      <TableContent ref="TableContent"/>
     </div>
   </div>
 </template>
@@ -27,12 +32,22 @@
   // import 'materialize-css';
   // import 'materialize-css/dist/css/materialize.css';
   // import DataTable from "vue-materialize-datatable";
+  import TableContent from "../TableContent.vue";
+  import Input from "../../components/Input.vue"
 
   export default {
+    components: {
+        TableContent,
+        SearchInput,
+        Input,
+    },
     data() {
       return {
         //list category
         list: [],
+        categoryData: {
+          category: null,
+        },
         tableColumns1: [
           {
             label: "Character name",
@@ -88,11 +103,6 @@
       this.loadData();
     },
 
-    components: {
-      SearchInput,
-      // "datatable": DataTable,
-    },
-
     methods: {
       /**
        * load dữ liệu new để hiển thị
@@ -142,6 +152,21 @@
         this.goto('/category');
       },
 
+      saveData() {
+        console.log(this.categoryData)
+        this.axios.post('http://34.126.110.103:8080/uetshare/category/create', this.categoryData).then((response) => {
+            if (response) {
+              alert("Thêm thành công");
+              this.$refs.TableContent.getDataCategory();
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
+      },
+
+      deleteData() {
+        this.$refs.TableContent.deleteCategory();
+      },
     }
   }
 </script>
@@ -168,5 +193,11 @@
 
   .category .content {
     height: calc(100% - 46px - 40px - 13px);
+  }
+
+  .nav-input-right {
+    display: flex;
+    width: 50%;
+    justify-content: space-between;
   }
 </style>
