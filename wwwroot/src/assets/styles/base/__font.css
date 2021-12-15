@@ -1,0 +1,97 @@
+@font-face {
+    font-family: RobotoRegular;
+    src: url(../../font/Roboto-Regular.ttf);
+}
+@font-face {
+    font-family: RobotoMedium;
+    src: url(../../font/Roboto-Medium.ttf);
+}
+@font-face {
+    font-family: RobotoBold;
+    src: url(../../font/Roboto-Bold.ttf);
+}
+
+.ff-rr {
+    font-family: RobotoRegular!important;
+}
+.ff-rm {
+    font-family: RobotoMedium!important;
+}
+.ff-rb {
+    font-family: RobotoBold!important;
+}
+
+.fw-b {
+    font-weight: bold;
+}
+.fs-i {
+    font-style: italic;
+}
+
+.fs-8p {
+    font-size: 8px;
+}
+.fs-9p {
+    font-size: 9px;
+}
+.fs-10p {
+    font-size: 10px;
+}
+.fs-11p {
+    font-size: 11px;
+}
+.fs-12p {
+    font-size: 12px;
+}
+.fs-14p {
+    font-size: 14px;
+}
+.fs-15p {
+    font-size: 15px;
+}
+.fs-16p {
+    font-size: 16px;
+}
+.fs-17p {
+    font-size: 17px;
+}
+.fs-18p {
+    font-size: 18px;
+}
+
+.fs-20p {
+    font-size: 20px;
+}
+.fs-22p {
+    font-size: 22px;
+}
+.fs-24p {
+    font-size: 24px;
+}
+.fs-32p {
+    font-size: 32px;
+}
+.fs-36p {
+    font-size: 36px;
+}
+.fs-42p {
+    font-size: 42px;
+}
+.fs-48p {
+    font-size: 48px;
+}
+
+
+/* back-ground */
+.w-16p {
+    width: 16px;
+}
+.w-18p {
+    width: 18px;
+}
+.w-20p {
+    width: 20px;
+}
+.w-24p {
+    width: 24px;
+}

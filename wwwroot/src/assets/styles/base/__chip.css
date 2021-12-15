@@ -1,0 +1,19 @@
+.chip {
+    min-height: 30px;
+    padding: 0 16px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chip.chip-success {
+    background-color: #f0f9eb;
+    border-color: #e1f3d8;
+    color: #67c23a;
+}
+.chip.chip-danger {
+    background-color: #fef0f0;
+    border-color: #fde2e2;
+    color: #f56c6c;
+}

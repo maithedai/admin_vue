@@ -1,0 +1,96 @@
+/* =================================== CheckBox ====================================== */
+.el-checkbox__inner {
+    width: 22px!important;
+    height: 22px!important;
+    border-radius: 4px!important;
+}
+.el-checkbox__input.is-indeterminate .el-checkbox__inner::before {
+    transform: scale(.75)!important;
+    top: 8px!important;
+}
+.el-checkbox__input.is-checked .el-checkbox__inner::after {
+    transform: rotate(45deg) scaleY(1.7)!important;
+    left: 8px;
+    top: 4px;
+}
+
+.el-checkbox__inner::after {
+    left: 8px;
+    top: 4px;
+}
+
+
+
+/* =================================== Input ====================================== */
+.d-required:after {
+    content: " *";
+    color: #ff6900;
+}
+.text-danger {
+    color: #f65454!important;
+}
+.form-control.invalid {
+    border: 1px solid #f65454!important;
+}
+.form-control {
+    min-height: 40px!important;
+    max-width: 750px;
+    border: 1px solid #E5E5E5!important;
+}
+.form-control:focus {
+    box-shadow: none!important;
+    border: 1px solid #80bdff!important;
+}
+
+::placeholder {
+    color: #A1A1A1!important;
+    font-size: 13px;
+}
+input[text-alignright] {
+    text-align: right;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+.form-group.suffix .form-control {
+    padding-right: 36px;
+}
+.form-group .suffix-text {
+    position: relative;
+    bottom: 29px;
+    right: 8px;
+    float: right;
+    color: #bbb;
+    font-style: italic;
+    font-size: 12px;
+    height: 0;
+}
+
+
+/* =================================== Dropdown ====================================== */
+.el-select-dropdown {
+    margin: 0!important;
+}
+.el-select-dropdown .popper__arrow {
+    display: none!important;
+}
+.el-select.invalid .el-input__inner{
+    border: 1px solid #f65454!important;
+}
+
+.el-input, .el-select {
+    width: 100%!important;
+}
+
+
+/* =================================== File Upload ====================================== */
+.el-upload-dragger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}

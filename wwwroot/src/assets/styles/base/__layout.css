@@ -1,0 +1,53 @@
+/* ================================ Dialog ==================================== */
+.el-dialog {
+    margin: 0!important;
+    position: absolute!important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-height: calc(100% - 20px);
+    border-radius: 4px!important;
+}
+.el-dialog__title {
+    font-size: 15px!important;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.el-dialog__body {
+    max-height: 100%;
+    position: relative;
+    padding: 10px 20px 20px!important;
+}
+.el-dialog__footer {
+    height: 60px;
+    padding: 0 24px!important;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    border: 1px solid #e5e5e5;
+    border-radius: 0 0 4px 4px;
+}
+.el-dialog__headerbtn {
+    width: 36px;
+    height: 36px;
+    top: 12px!important;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.el-dialog__headerbtn:hover {
+    background-color: #e5e5e5;
+}
+.el-dialog__headerbtn .el-icon-close:before {
+    font-size: 18px;
+}
+.el-dialog__headerbtn .el-dialog__close {
+    color: #000!important;
+}
+
+
+/* ================================ Popover ==================================== */
+.el-popover {
+    margin: 0!important;
+}

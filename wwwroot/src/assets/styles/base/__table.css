@@ -1,0 +1,93 @@
+
+.el-table__header tr th:last-child,
+.el-table__header tr th:nth-last-child(2),
+.el-table__row td:last-child
+{
+    border-right: 0;
+}
+.column-action button {
+    border-radius: 50%;
+}
+
+.el-table__row {
+    cursor: pointer;
+}
+
+.el-table__fixed-right {
+    box-shadow: none!important;
+}
+.el-table__header .cell {
+    white-space: nowrap!important;
+}
+.el-table__row .hover-action {
+    position: absolute!important;
+    right: 0;
+    border: 0;
+}
+.el-table__header tr .hover-action, .el-table__fixed-right-patch {
+    display: none;
+}
+.el-table td, .el-table th {
+    padding: 8px 0!important;
+}
+.el-table th .cell {
+    line-height: 16px!important;
+}
+.el-table__row.hover-row td {
+    background-color: transparent!important;
+}
+.el-table__row:hover {
+    background-color: #F5F7FA;
+}
+.el-table::before {
+    display: none;
+}
+
+
+/* ================================ Check box ==================================== */
+label.el-checkbox {
+    margin-bottom: 0;
+}
+
+/* ================================ Pagination ==================================== */
+.el-pagination__total {
+    display: none!important;
+}
+
+.el-pager li.number {
+    min-width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin: 0 4px;
+    background-color: #fff;
+    font-weight: bold;
+    color: #2C3E50!important;
+    font-size: 12px;
+    line-height: 32px;
+}
+.el-pager li.number:hover:not(.active) {
+    background-color: #EAEAEA;
+}
+.el-pager li.active {
+    background-color: #E1F2F9;
+}
+
+.btn-prev, .btn-next, .more {
+    min-width: 32px!important;
+    height: 32px!important;
+    border-radius: 4px;
+}
+.btn-prev:hover, .btn-next:hover, .more:hover {
+    background-color: #EAEAEA!important;
+}
+
+.more.btn-quicknext, .btn-quickprev {
+    border-radius: 50%;
+    line-height: 32px!important;
+}
+.btn-next {
+    padding-left: 6px!important;
+}
+.btn-prev {
+    padding-right: 6px!important;
+}
