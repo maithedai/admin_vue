@@ -4,26 +4,33 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Category</th>
+                    <th>{{ nameList }}</th>
                     <th>Time</th>
                     <th class="action-edit">Action</th>
                 </tr>
             </thead>
-            <tbody v-if="categoryData && categoryData.length > 0">
-                <tr v-for="(item, index) in categoryData" :key="index" :class="{'item-active': item.id == idItem}" @click="selectedItem(item)">
+            <tbody v-if="listData && listData.length > 0">
+                <tr v-for="(item, index) in listData" :key="index" :class="{'item-active': item.id == idItem}" @click="selectedItem(item)">
                     <td> {{ item.id }} </td>
-                    <td> {{ item.category }} </td>
+                    <td class="td-re"> 
+                        {{ item.category }} 
+                        <Input class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.category"/>
+                    </td>
                     <td> {{ item.time }} </td>
-                    <td class="action-edit">
-                        <button class="d-btn d-btn-icon d-btn-primary" @click="actionEdit">
+                    <td class="action-edit" style="background-color: #f9fafa;">
+                        <button v-if="!isEdit || item.id != idItem" class="d-btn d-btn-icon d-btn-primary" @click="actionEdit">
                             <i class="el-icon-edit"></i>
                             Edit
+                        </button>
+                        <button v-if="isEdit && item.id == idItem" class="d-btn d-btn-icon d-btn-success" @click="actionSaveDateEdit">
+                            <i class="el-icon-check"></i>
+                            Save
                         </button>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <div class="tb-empty" v-if="!categoryData || categoryData.length == 0">
+        <div class="tb-empty" v-if="!listData || listData.length == 0">
             <img src="https://actappg2.misacdn.net/img/bg_report_nodata.76e50bd8.svg" class="nodata-img">
             <div class="text-body-content">Không có dữ liệu</div>
         </div>
@@ -32,39 +39,42 @@
 
 <script>
 
+import Input from "../components/Input.vue"
+
 export default {
+    components: {
+        Input,
+    },
     props: {
         listData: {
             Type: Object,
             default: {},
+        },
+        nameList: {
+            Type: String,
+            default: '',
         }
     },
     data() {
         return {
-            categoryData: [],
             idItem: 0,
+            isEdit: false,
         }
     },
 
     created() {
-        this.getDataCategory();
+
+    },
+
+    mounted() {
+
     },
 
     methods: {
         actionEdit() {
-
+            this.isEdit = true;
         },
 
-        getDataCategory() {
-            var me = this;
-            this.axios.get('http://34.126.110.103:8080/uetshare/category').then((response) => {
-                if (response) {
-                    me.categoryData = response.data.categoryDtoList
-                }
-            }).catch((error) => {
-                console.log(error);
-            });
-        }, 
         selectedItem(item) {
             this.idItem = item.id;
         },
@@ -72,17 +82,12 @@ export default {
         deleteCategory() {
             console.log(this.idItem);
         },
-
-        searchData(val) {
-            var me = this;
-            this.axios.get('http://34.126.110.103:8080/uetshare/category/search?index=1&text=' + val).then((response) => {
-            if (response) {
-                me.categoryData = response.data.categoryDtoList
-            }
-            }).catch((error) => {
-                console.log(error);
-        });
-      }
+        
+        actionSaveDateEdit() {
+            var item = this.listData.find(x => x.id == this.idItem);
+            this.$emit("saveDataEdit", item, this.idItem);
+            this.isEdit = false;
+        }
     },
 }
 </script>
@@ -133,7 +138,6 @@ tr:hover {
 
 td {
   padding: 10px;
-  border-bottom: 1px solid #ccc;
 }
 
 .action-edit {
@@ -150,6 +154,15 @@ td {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.td-re {
+    position: relative;
+}
+
+.input-edit {
+    position: absolute;
+    top: 10px;
 }
 
 </style>
