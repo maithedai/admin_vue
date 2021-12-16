@@ -42,6 +42,10 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
 
+// vue-debounce
+import vueDebounce from 'vue-debounce'
+Vue.use(vueDebounce)
+
 // event bus
 Vue.prototype.$eventBus = new Vue();
 

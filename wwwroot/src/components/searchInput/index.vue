@@ -124,6 +124,7 @@ export default {
 <style scoped>
 .search-input {
     position: relative;
+    width: 300px;
 }
 .custom-input {
     padding-left: 30px;
