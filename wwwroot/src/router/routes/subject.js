@@ -1,4 +1,4 @@
-import subject from '@/views/subject/listSubject/index'
+import subject from '@/views/subject/index'
 
 export default [
     {

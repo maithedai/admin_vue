@@ -24,9 +24,12 @@
         "sass-loader": "^11.0.1",
         "v-money": "^0.8.1",
         "vue": "^2.5.2",
+        "vue-axios": "^3.4.0",
+        "vue-debounce": "^3.0.1",
         "vue-materialize-datatable": "^1.0.4",
         "vue-router": "^3.0.1",
         "vuejs-datatable": "^2.0.0-alpha.7",
+        "vuejs-paginate": "^2.1.0",
         "vuelidate": "^0.7.6",
         "written-number": "^0.9.1"
     },
