@@ -22,7 +22,7 @@
 
     <div class="content mt-3">
       <!-- <datatable title="List Category" :columns="tableColumns1" :rows="tableRows1" /> -->
-      <TableContent ref="TableContent"/>
+      <TableContent :nameList="'Category'" :listData="listData" ref="TableContent" @saveDataEdit="saveDataEdit"/>
     </div>
   </div>
 </template>
@@ -45,8 +45,9 @@
       return {
         //list category
         list: [],
+        listData: {},
         categoryData: {
-          category: null,
+          category: null
         },
         tableColumns1: [
           {
@@ -100,16 +101,23 @@
     },
 
     created() {
-      this.loadData();
+      this.getDataCategory();
     },
 
     methods: {
       /**
        * load dữ liệu new để hiển thị
        */
-      async loadData() {
-
-      },
+      getDataCategory() {
+        var me = this;
+        this.axios.get('http://34.126.110.103:8080/uetshare/category/pagination?index=1').then((response) => {
+            if (response) {
+                me.listData = response.data.categoryDtoList
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
+      }, 
 
       handleClickAdd() {
         this.goto('/add_category');
@@ -153,15 +161,19 @@
       },
 
       saveData() {
-        console.log(this.categoryData)
-        this.axios.post('http://34.126.110.103:8080/uetshare/category/create', this.categoryData).then((response) => {
-            if (response) {
-              alert("Thêm thành công");
-              this.$refs.TableContent.getDataCategory();
-            }
-        }).catch((error) => {
-            console.log(error);
-        });
+        if(this.categoryData["category"] != null) {
+          console.log(this.categoryData)
+          debugger
+          this.axios.post('http://34.126.110.103:8080/uetshare/category/create', this.categoryData).then((response) => {
+          if (response) {
+            alert("Thêm thành công");
+            this.getDataCategory();
+          }
+          }).catch((error) => {
+              console.log(error);
+          });
+        }
+        
       },
 
       deleteData() {
@@ -172,11 +184,29 @@
        * Hàm search list Data
        */
       searchData(val) {
-        if (val != '') {
-          this.$refs.TableContent.searchData(val);
+        var me = this;
+        if (val != ''){
+          this.axios.get('http://34.126.110.103:8080/uetshare/category/search?index=1&text=' + val).then((response) => {
+          if (response) {
+              me.listData = response.data.categoryDtoList;
+          }
+          }).catch((error) => {
+              console.log(error);
+          });
         }else {
-          this.$refs.TableContent.getDataCategory();
+          this.getDataCategory();
         }
+      },
+
+      saveDataEdit(item, id) {
+        this.axios.put('http://34.126.110.103:8080/uetshare/category/' + id, item).then((response) => {
+          if (response) {
+            alert("Sửa thành công");
+            this.getDataCategory();
+          }
+        }).catch((error) => {
+            console.log(error);
+        });
       }
     }
   }
@@ -208,7 +238,7 @@
 
   .nav-input-right {
     display: flex;
-    min-width: 700px;
+    min-width: 550px;
     justify-content: space-between;
   }
 </style>

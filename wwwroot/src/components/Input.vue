@@ -108,11 +108,12 @@ export default {
 }
 
 input:focus {
-        border: 1px solid #7199cc;
-    }
+    border: 1px solid #80bdff;
+}
     
     input {
-        width: 300px;
+        max-width: 300px;
+        min-width: 200px;
         height: 100%;
         margin: 0;
         background-color: #ffffff !important;
