@@ -14,7 +14,7 @@ export default {
             default: 'input'
         },
         value:{
-            type: String,
+            type: [String, Number],
             default: ''
         },
         placeholder:{
@@ -101,10 +101,12 @@ export default {
 <style scoped>
 
 .input-cp {
+    display: flex;
     height: 40px;
     padding: 0;
     align-items: center;
     position: relative;
+    width: 50%;
 }
 
 input:focus {
@@ -112,16 +114,14 @@ input:focus {
 }
     
     input {
-        max-width: 300px;
-        min-width: 200px;
+        width: 100%;
         height: 100%;
         margin: 0;
         background-color: #ffffff !important;
         outline: none !important;
         border: 1px solid #e0e0e0;
         border-radius: 2px;
-        padding: 0 8px 0px 8px;
-        
+        padding: 0 8px 0px 8px;        
     }
 
     input::placeholder{

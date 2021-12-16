@@ -24,6 +24,7 @@
       <!-- <datatable title="List Category" :columns="tableColumns1" :rows="tableRows1" /> -->
       <TableContent :nameList="'Category'" :listData="listData" ref="TableContent" @saveDataEdit="saveDataEdit"/>
     </div>
+    <Paging :page-count="20" :page-range="2" :margin-pages="2" @changePageCurent="changePageCurent"/>
   </div>
 </template>
 
@@ -34,12 +35,14 @@
   // import DataTable from "vue-materialize-datatable";
   import TableContent from "../TableContent.vue";
   import Input from "../../components/Input.vue"
+  import Paging from "../../components/Paging.vue"
 
   export default {
     components: {
         TableContent,
         SearchInput,
         Input,
+        Paging
     },
     data() {
       return {
@@ -207,6 +210,17 @@
         }).catch((error) => {
             console.log(error);
         });
+      },
+
+      changePageCurent(page) {
+        var me = this;
+        this.axios.get('http://34.126.110.103:8080/uetshare/category/pagination?index=' + page).then((response) => {
+            if (response) {
+                me.listData = response.data.categoryDtoList
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
       }
     }
   }
@@ -233,12 +247,12 @@
   }
 
   .category .content {
-    height: calc(100% - 46px - 40px - 13px);
+    height: calc(100% - 146px);
   }
 
   .nav-input-right {
     display: flex;
-    min-width: 550px;
+    min-width: 650px;
     justify-content: space-between;
   }
 </style>
