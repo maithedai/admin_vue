@@ -4,7 +4,7 @@
       <div class="title">List Category</div>
       <div class="top-action">
         <div class="nav-input-right">
-          <!-- <SearchInput placeholder="Search Category..." v-model="searchText"></SearchInput> -->
+          <SearchInput v-debounce:800="searchData" placeholder="Search Category..." v-model="searchText"></SearchInput>
           <Input fieldName="category" placeholder="Category..." v-model="categoryData.category"/>
         </div>
         <div class="float-right">
@@ -167,6 +167,17 @@
       deleteData() {
         this.$refs.TableContent.deleteCategory();
       },
+
+      /**
+       * Hàm search list Data
+       */
+      searchData(val) {
+        if (val != '') {
+          this.$refs.TableContent.searchData(val);
+        }else {
+          this.$refs.TableContent.getDataCategory();
+        }
+      }
     }
   }
 </script>
@@ -197,7 +208,7 @@
 
   .nav-input-right {
     display: flex;
-    width: 50%;
+    min-width: 700px;
     justify-content: space-between;
   }
 </style>

@@ -23,12 +23,22 @@
                 </tr>
             </tbody>
         </table>
+        <div class="tb-empty" v-if="!categoryData || categoryData.length == 0">
+            <img src="https://actappg2.misacdn.net/img/bg_report_nodata.76e50bd8.svg" class="nodata-img">
+            <div class="text-body-content">Không có dữ liệu</div>
+        </div>
     </div>
 </template>
 
 <script>
 
 export default {
+    props: {
+        listData: {
+            Type: Object,
+            default: {},
+        }
+    },
     data() {
         return {
             categoryData: [],
@@ -61,7 +71,18 @@ export default {
 
         deleteCategory() {
             console.log(this.idItem);
-        }
+        },
+
+        searchData(val) {
+            var me = this;
+            this.axios.get('http://34.126.110.103:8080/uetshare/category/search?index=1&text=' + val).then((response) => {
+            if (response) {
+                me.categoryData = response.data.categoryDtoList
+            }
+            }).catch((error) => {
+                console.log(error);
+        });
+      }
     },
 }
 </script>
@@ -123,4 +144,12 @@ td {
 .item-active {
     background-color: #95b9e5 !important;
 }
+
+.tb-empty {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 </style>
