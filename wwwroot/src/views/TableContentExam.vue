@@ -22,7 +22,11 @@
                         <a :href="'http://34.126.110.103:8080/uetshare/image' + item.link" target="_blank" style="cursor: pointer; color: #007bff !important;">
                             {{ item.file_name }}
                         </a>
-                        <Input class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.link"/>
+                        <button v-if="isEdit && item.id == idItem" class="d-btn d-btn-icon d-btn-primary" @click="uploadFile(index)">
+                            <i class="el-icon-upload"></i>
+                            Upload
+                        </button>
+                        <input style="display: none;" type='file' ref="fileUpload"/>
                     </td>
                     <td class="td-re">
                         {{ item.type }} 
@@ -37,7 +41,7 @@
                             <i class="el-icon-edit"></i>
                             Edit
                         </button>
-                        <button v-if="isEdit && item.id == idItem" class="d-btn d-btn-icon d-btn-success" @click="actionSaveDateEdit">
+                        <button v-if="isEdit && item.id == idItem" class="d-btn d-btn-icon d-btn-success" @click="actionSaveDateEdit(index)">
                             <i class="el-icon-check"></i>
                             Save
                         </button>
@@ -94,11 +98,16 @@ export default {
             this.idItem = item.id;
         },
         
-        actionSaveDateEdit() {
-            var item = this.listData.find(x => x.id == this.idItem);
-            this.$emit("saveDataEdit", item, this.idItem);
+        actionSaveDateEdit(index) {
             this.isEdit = false;
+            console.log(this.listData[index])
+            
+            console.log(this.$refs.fileUpload[index].files[0])
         },
+
+        uploadFile(index) {
+            this.$refs.fileUpload[index].click();
+        }
     },
 }
 </script>
