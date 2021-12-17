@@ -74,7 +74,6 @@ export default {
         if (val != ''){
           this.axios.get('http://34.126.110.103:8080/uetshare/exam-document/subject/1?type=DOCUMENT&index=1&text' + val).then((response) => {
           if (response) {
-            console.log(response.data.examDocumentDtoList);
             me.listData = response.data.examDocumentDtoList;
           }
           }).catch((error) => {
