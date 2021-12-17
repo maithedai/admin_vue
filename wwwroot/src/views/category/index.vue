@@ -23,7 +23,7 @@
     <div class="content mt-3">
       <TableContent :nameList="'Category'" :listData="listData" ref="TableContent" @saveDataEdit="saveDataEdit"/>
     </div>
-    <Paging :page-count="20" :page-range="2" :margin-pages="2" @changePageCurent="changePageCurent"/>
+    <Paging :page-count="totalPage" :page-range="2" :margin-pages="2" @changePageCurent="changePageCurent"/>
   </div>
 </template>
 
@@ -42,7 +42,7 @@
     },
     data() {
       return {
-        //list category
+        totalPage: 0,
         list: [],
         listData: {},
         categoryData: {
@@ -66,7 +66,8 @@
         var me = this;
         this.axios.get('http://34.126.110.103:8080/uetshare/category/pagination?index=1').then((response) => {
             if (response) {
-                me.listData = response.data.categoryDtoList
+              me.listData = response.data.categoryDtoList;
+              me.totalPage = response.data.total_page;
             }
         }).catch((error) => {
             console.log(error);
@@ -116,8 +117,6 @@
 
       saveData() {
         if(this.categoryData["category"] != null) {
-          console.log(this.categoryData)
-          debugger
           this.axios.post('http://34.126.110.103:8080/uetshare/category/create', this.categoryData).then((response) => {
           if (response) {
             alert("Thêm thành công");
@@ -142,10 +141,11 @@
         if (val != ''){
           this.axios.get('http://34.126.110.103:8080/uetshare/category/search?index=1&text=' + val).then((response) => {
           if (response) {
-              me.listData = response.data.categoryDtoList;
+            me.listData = response.data.categoryDtoList;
+            me.totalPage = response.data.total_page;
           }
           }).catch((error) => {
-              console.log(error);
+            console.log(error);
           });
         }else {
           this.getDataCategory();
@@ -167,7 +167,7 @@
         var me = this;
         this.axios.get('http://34.126.110.103:8080/uetshare/category/pagination?index=' + page).then((response) => {
             if (response) {
-                me.listData = response.data.categoryDtoList
+              me.listData = response.data.categoryDtoList
             }
         }).catch((error) => {
             console.log(error);

@@ -9,9 +9,10 @@
               class="pl-3 pr-3"
               :title="category.CategoryName"
               :options="listCategory"
-              :keyName="'CategoryID'"
+              :keyName="'category'"
+              :keyID="'id'"
               @required-data="getDataCategory"
-              :labelName="'CategoryName'"
+              :labelName="category.CategoryName"
               placeholder="Chọn Category"
               @select="selectCategory"
           ></Dropdown>
@@ -95,18 +96,17 @@ export default {
         getDataCategory() {
           var me = this;
           this.axios.get('http://34.126.110.103:8080/uetshare/category').then((response) => {
-              if (response) {
-                  me.listCategory = response.data.categoryDtoList;
-                  console.log(me.listCategory = response.data.categoryDtoList);
-              }
+            if (response) {
+                me.listCategory = response.data.categoryDtoList;
+            }
           }).catch((error) => {
               console.log(error);
           });
         },
 
         selectCategory(data) {
-            this.category.CategoryName = data.CategoryName;
-            this.category.CategoryID = data.CategoryID;
+            this.category.CategoryName = data.category;
+            this.category.CategoryID = data.id;
         },
 
         handleClickAdd() {

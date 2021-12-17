@@ -13,9 +13,9 @@
         >
             <el-option
                 v-for="item in options"
-                :key="item[keyName]"
-                :label="item[labelName]"
-                :value="item[keyName]"
+                :key="item[keyID]"
+                :label="item[keyName]"
+                :value="item[keyID]"
             >
             </el-option>
         </el-select>
@@ -53,6 +53,10 @@ export default {
         keyName: {
             type: String,
             default: "value"
+        },
+        keyID: {
+            type: Number,
+            default: 0
         },
         // cho phép nhập để filter
         filterable: {
@@ -97,7 +101,7 @@ export default {
          */
         handleSelect(optionKey){
             if(optionKey) {
-                var option = this.options.find(ele => ele[this.keyName] == optionKey);
+                var option = this.options.find(ele => ele[this.keyID] == optionKey);
                 this.$emit("select", option);
             }
         },

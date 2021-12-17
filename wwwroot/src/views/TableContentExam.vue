@@ -19,16 +19,18 @@
                         <Input class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.name"/>
                     </td>
                     <td class="td-re"> 
-                        {{ item.name }} 
-                        <Input class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.name"/>
+                        <a :href="'http://34.126.110.103:8080/uetshare/image' + item.link" target="_blank" style="cursor: pointer; color: #007bff !important;">
+                            {{ item.file_name }}
+                        </a>
+                        <Input class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.link"/>
                     </td>
                     <td class="td-re">
                         {{ item.type }} 
-                        <Input class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.type"/>
+                        <Input style="width: 75%" class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.type"/>
                     </td>
-                    <td class="td-re"> 
-                        {{ item.subject_id }} 
-                        <Input class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.subject_id"/>
+                    <td class="td-re" > 
+                        {{ item.subjectDto.subject_name }}
+                        <Input style="width: 75%" class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.subjectDto.subject_name"/>
                     </td>
                     <td class="action-edit" style="background-color: #f9fafa;">
                         <button v-if="!isEdit || item.id != idItem" class="d-btn d-btn-icon d-btn-primary" @click="actionEdit">
@@ -96,7 +98,7 @@ export default {
             var item = this.listData.find(x => x.id == this.idItem);
             this.$emit("saveDataEdit", item, this.idItem);
             this.isEdit = false;
-        }
+        },
     },
 }
 </script>
