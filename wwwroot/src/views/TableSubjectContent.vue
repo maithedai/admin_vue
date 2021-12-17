@@ -5,7 +5,7 @@
                 <tr>
                     <th>ID</th>
                     <th>{{ nameList }}</th>
-                    <th>Time</th>
+                    <th>Category</th>
                     <th class="action-edit">Action</th>
                 </tr>
             </thead>
@@ -13,10 +13,10 @@
                 <tr v-for="(item, index) in listData" :key="index" :class="{'item-active': item.id == idItem}" @click="selectedItem(item)">
                     <td> {{ item.id }} </td>
                     <td class="td-re">
-                        {{ item.category }}
-                        <Input class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.category"/>
+                        {{ item.subject_name }}
+                        <Input class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.subject_name"/>
                     </td>
-                    <td> {{ convertTime(item.time) }} </td>
+                    <td> {{ item.categoryDto.category }} </td>
                     <td class="action-edit" style="background-color: #f9fafa;">
                         <button v-if="!isEdit || item.id != idItem" class="d-btn d-btn-icon d-btn-primary" @click="actionEdit">
                             <i class="el-icon-edit"></i>
@@ -79,7 +79,7 @@ export default {
             this.idItem = item.id;
         },
 
-        deleteCategory() {
+        deleteSubject() {
             console.log(this.idItem);
         },
 

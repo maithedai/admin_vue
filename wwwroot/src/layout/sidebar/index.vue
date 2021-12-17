@@ -55,7 +55,7 @@ export default {
                   // iconActive: "",
                 },
                 {
-                  name: "Exam",
+                  name: "Exam document",
                   baseUrl: "/exam",
                   url: "/exam",
                   // icon: "",

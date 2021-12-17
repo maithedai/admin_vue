@@ -21,25 +21,24 @@
     </div>
 
     <div class="content mt-3">
-      <!-- <datatable title="List Category" :columns="tableColumns1" :rows="tableRows1" /> -->
       <TableContent :nameList="'Category'" :listData="listData" ref="TableContent" @saveDataEdit="saveDataEdit"/>
     </div>
+    <Paging :page-count="20" :page-range="2" :margin-pages="2" @changePageCurent="changePageCurent"/>
   </div>
 </template>
 
 <script>
   import SearchInput from "@/components/searchInput";
-  // import 'materialize-css';
-  // import 'materialize-css/dist/css/materialize.css';
-  // import DataTable from "vue-materialize-datatable";
   import TableContent from "../TableContent.vue";
   import Input from "../../components/Input.vue"
+  import Paging from "../../components/Paging.vue"
 
   export default {
     components: {
         TableContent,
         SearchInput,
         Input,
+        Paging
     },
     data() {
       return {
@@ -49,52 +48,7 @@
         categoryData: {
           category: null
         },
-        tableColumns1: [
-          {
-            label: "Character name",
-            field: "charName",
-            numeric: false,
-            html: false
-          },
-          {
-            label: "First appearance",
-            field: "firstAppearance",
-            numeric: false,
-            html: false
-          },
-          {
-            label: "Created by",
-            field: "createdBy",
-            numeric: false,
-            html: false
-          },
-          {
-            label: "Voiced by",
-            field: "voicedBy",
-            numeric: false,
-            html: false
-          }
-        ],
-        tableRows1: [
-          {
-            charName: "Abu",
-            firstAppearance: "Alladin (1992)",
-            createdBy: "Joe Grant",
-            voicedBy: "Frank Welker"
-          },
-          {
-            charName: "Magic Carpet",
-            firstAppearance: "Peter (1994)",
-            createdBy: "Randy Cartwright",
-            voicedBy: "N/A"
-          },
-          {
-            charName: "The Sultan",
-            firstAppearance: "John (1995)",
-            createdBy: "Navid Negahban",
-            voicedBy: "Douglas Seale"
-          }
-        ],
+
         loading: false,
         searchText: null,
       }
@@ -117,7 +71,7 @@
         }).catch((error) => {
             console.log(error);
         });
-      }, 
+      },
 
       handleClickAdd() {
         this.goto('/add_category');
@@ -173,7 +127,7 @@
               console.log(error);
           });
         }
-        
+
       },
 
       deleteData() {
@@ -207,6 +161,17 @@
         }).catch((error) => {
             console.log(error);
         });
+      },
+
+      changePageCurent(page) {
+        var me = this;
+        this.axios.get('http://34.126.110.103:8080/uetshare/category/pagination?index=' + page).then((response) => {
+            if (response) {
+                me.listData = response.data.categoryDtoList
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
       }
     }
   }
@@ -233,12 +198,12 @@
   }
 
   .category .content {
-    height: calc(100% - 46px - 40px - 13px);
+    height: calc(100% - 146px);
   }
 
   .nav-input-right {
     display: flex;
-    min-width: 550px;
+    min-width: 650px;
     justify-content: space-between;
   }
 </style>

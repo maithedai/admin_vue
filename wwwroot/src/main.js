@@ -46,6 +46,10 @@ Vue.use(VueAxios, axios)
 import vueDebounce from 'vue-debounce'
 Vue.use(vueDebounce)
 
+//paging
+import Paginate from 'vuejs-paginate'
+Vue.component('paginate', Paginate)
+
 // event bus
 Vue.prototype.$eventBus = new Vue();
 

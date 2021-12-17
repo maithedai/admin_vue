@@ -5,18 +5,31 @@
                 <tr>
                     <th>ID</th>
                     <th>{{ nameList }}</th>
-                    <th>Time</th>
+                    <th>File</th>
+                    <th>Type</th>
+                    <th>Subject</th>
                     <th class="action-edit">Action</th>
                 </tr>
             </thead>
             <tbody v-if="listData && listData.length > 0">
                 <tr v-for="(item, index) in listData" :key="index" :class="{'item-active': item.id == idItem}" @click="selectedItem(item)">
                     <td> {{ item.id }} </td>
-                    <td class="td-re">
-                        {{ item.category }}
-                        <Input class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.category"/>
+                    <td class="td-re"> 
+                        {{ item.name }} 
+                        <Input class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.name"/>
                     </td>
-                    <td> {{ convertTime(item.time) }} </td>
+                    <td class="td-re"> 
+                        {{ item.name }} 
+                        <Input class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.name"/>
+                    </td>
+                    <td class="td-re">
+                        {{ item.type }} 
+                        <Input class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.type"/>
+                    </td>
+                    <td class="td-re"> 
+                        {{ item.subject_id }} 
+                        <Input class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.subject_id"/>
+                    </td>
                     <td class="action-edit" style="background-color: #f9fafa;">
                         <button v-if="!isEdit || item.id != idItem" class="d-btn d-btn-icon d-btn-primary" @click="actionEdit">
                             <i class="el-icon-edit"></i>
@@ -78,11 +91,7 @@ export default {
         selectedItem(item) {
             this.idItem = item.id;
         },
-
-        deleteCategory() {
-            console.log(this.idItem);
-        },
-
+        
         actionSaveDateEdit() {
             var item = this.listData.find(x => x.id == this.idItem);
             this.$emit("saveDataEdit", item, this.idItem);
