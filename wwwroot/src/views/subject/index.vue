@@ -85,7 +85,7 @@ export default {
           var me = this;
           this.axios.get('http://34.126.110.103:8080/uetshare/subject?index=1').then((response) => {
               if (response) {
-                  me.listData = response.data.subjectDtoList
+                  me.listData = response.data.subjectDtoList;
               }
           }).catch((error) => {
               console.log(error);

@@ -21,7 +21,7 @@
         </div>
 
         <div class="content mt-3">
-            <TableContentExam :nameList="'Name'" :listData="listData"/>
+            <TableContentExam :nameList="'Name'" :listData="listData" @editExamDocument="editExamDocument"/>
         </div>
         <Paging :page-count="totalPage" :page-range="2" :margin-pages="2"/>
     </div>
@@ -86,6 +86,17 @@ export default {
           this.getDataList();
         }
       },
+
+      editExamDocument(form, id) {
+        this.axios.put('http://34.126.110.103:8080/uetshare/exam-document/' + id, form).then((response) => {
+        if (response) {
+          alert("sửa thành công!");
+          this.getDataList();
+        }
+        }).catch((error) => {
+          console.log(error);
+        });
+      }
     }
 }
 </script>
