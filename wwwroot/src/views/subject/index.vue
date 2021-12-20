@@ -15,6 +15,7 @@
               :labelName="category.CategoryName"
               placeholder="Chọn Category"
               @select="selectCategory"
+              @clear-select="clearCategory"
           ></Dropdown>
           <Input fieldName="subject" placeholder="Subject..." v-model="subjectData.subject_name"/>
         </div>
@@ -24,16 +25,13 @@
             <i class="el-icon-plus" />
             Add
           </button>
-          <button class="d-btn d-btn-icon d-btn-danger" @click="deleteData()">
-            <i class="el-icon-delete" />
-            Delete
-          </button>
+
         </div>
       </div>
     </div>
 
     <div class="content mt-3">
-      <TableSubjectContent :nameList="'Subject'" :listData="listData" ref="TableSubjectContent" @saveDataEdit="saveDataEdit"/>
+      <TableSubjectContent :nameList="'Subject'" :listData="listData" ref="TableSubjectContent" @handleDelete="handleDelete" @saveDataEdit="saveDataEdit"/>
     </div>
   </div>
 </template>
@@ -83,7 +81,7 @@ export default {
          */
         getDataSubject() {
           var me = this;
-          this.axios.get('http://34.126.110.103:8080/uetshare/subject?index=1').then((response) => {
+          this.axios.get('http://34.126.110.103:8080/uetshare/subject/search?index=1').then((response) => {
               if (response) {
                   me.listData = response.data.subjectDtoList;
               }
@@ -136,13 +134,6 @@ export default {
         },
 
         /**
-         * xóa 1 category
-         */
-        async handleDelete(data) {
-
-        },
-
-        /**
          * xử lý sau khi lưu thành công
          */
         handleAfterSave() {
@@ -151,10 +142,8 @@ export default {
         },
 
         saveData() {
-          if(this.subjectData["subject"] != null) {
-            console.log(this.subjectData)
-            debugger
-            this.axios.post('http://34.126.110.103:8080/uetshare/subject', this.subjectData).then((response) => {
+          if(this.subjectData["subject_name"] != null && this.category.CategoryID != null) {
+            this.axios.post('http://34.126.110.103:8080/uetshare/subject', this.subjectData, this.category).then((response) => {
             if (response) {
               alert("Thêm thành công");
               this.getDataSubject();
@@ -184,9 +173,21 @@ export default {
         }
       },
 
-        deleteData() {
-          this.$refs.TableContent.deleteSubject();
+        // deleteData() {
+        //   this.$refs.TableContent.deleteSubject();
+        // },
+
+        handleDelete(item, id) {
+          this.axios.delete('http://34.126.110.103:8080/uetshare/subject/' + id, item).then((response) => {
+              if (response) {
+                alert("Xóa thành công");
+                this.getDataSubject();
+              }
+          }).catch((error) => {
+              console.log(error);
+          });
         },
+
 
         saveDataEdit(item, id) {
           this.axios.put('http://34.126.110.103:8080/uetshare/subject/' + id, item).then((response) => {
@@ -198,6 +199,14 @@ export default {
               console.log(error);
           });
         },
+
+        /**
+         * clear trường category
+         */
+        clearCategory() {
+          this.category.CategoryName = null;
+          this.category.CategoryID = null;
+        }
 
    }
 }
