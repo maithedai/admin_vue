@@ -146,12 +146,23 @@ export default {
                 form.append("file", this.$refs.fileUpload[index].files[0], this.$refs.fileUpload[index].files[0].name);
             }
             var x = this.listData[index];
-            var obj = `{
-                        "examDocumentType": " ` + x.type + `",
+            console.log(x.type)
+            console.log(this.type.name)
+            if (this.type.name != null){
+                 var obj = `{
+                        "examDocumentType": "` + this.type.name  + `",
                         "name": "` + x.name + `",
                         "account": {"id": 1},
                         "subject": {"id": ` + x.subject_id + `}
                     }`;
+            } else {
+                   var obj = `{
+                        "name": "` + x.name + `",
+                        "account": {"id": 1},
+                        "subject": {"id": ` + x.subject_id + `}
+                    }`;
+            }
+           
             form.append("ExamDocument", obj);
             this.$emit("editExamDocument", form, this.idItem);
         },
