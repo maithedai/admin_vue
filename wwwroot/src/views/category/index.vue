@@ -198,7 +198,7 @@
   }
 
   .category .content {
-    height: calc(100% - 146px);
+    height: calc(100vh - 225px);
   }
 
   .nav-input-right {

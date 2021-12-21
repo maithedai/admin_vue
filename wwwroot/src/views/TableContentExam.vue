@@ -30,7 +30,17 @@
                     </td>
                     <td class="td-re">
                         <div v-if="!isEdit || item.id != idItem"> {{ item.type }} </div>
-                        <Input style="width: 75%" class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.type"/>
+                        <Dropdown
+                            v-if="isEdit && item.id == idItem"
+                            class="pl-3 pr-3"
+                            :title="type.name"
+                            :options="listType"
+                            :keyName="'name'"
+                            :keyID="'id'"
+                            :labelName="type.name"
+                            placeholder="Chọn Type"
+                            @select="selectType">
+                        </Dropdown>
                     </td>
                     <td class="td-re" > 
                         <div v-if="!isEdit || item.id != idItem"> {{ item.subjectDto.subject_name }} </div>
@@ -97,6 +107,15 @@ export default {
                 subjectID: null,
                 subjectName: null
             },
+
+            listType: [
+                {name: "DOCUMENT", id: 1},
+                {name: "EXAM", id: 2},
+            ],
+            type: {
+                name: null,
+                id: null,
+            }
         }
     },
 
@@ -126,10 +145,10 @@ export default {
             }
             var x = this.listData[index];
             var obj = `{
-                        "examDocumentType": "DOCUMENT",
+                        "examDocumentType": " ` + this.type.name ? null: x.type + `",
                         "name": "` + x.name + `",
                         "account": {"id": 1},
-                        "subject": {"id": ` + x.subject_id + `}
+                        "subject": {"id": ` + x.subject_id + `},
                     }`;
             form.append("ExamDocument", obj);
             this.$emit("editExamDocument", form, this.idItem);
@@ -153,6 +172,11 @@ export default {
         selectSubject(data) {
             this.subject.subjectName = data.subject_name;
             this.subject.subjectID = data.id;
+        },
+        
+        selectType(data) {
+            this.type.name = data.name;
+            this.type.id = data.id;
         },
     },
 }
