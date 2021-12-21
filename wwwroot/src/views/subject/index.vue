@@ -50,7 +50,10 @@ export default {
         list: [],
         listData: {},
         subjectData: {
-          subject_name: null
+          subject_name: null,
+          category: {
+            id: null
+          }
         },
         listCategory: null,
         category: {
@@ -143,8 +146,8 @@ export default {
 
         saveData() {
           if(this.subjectData["subject_name"] != null && this.category.CategoryID != null) {
-            let category_id = this.category.id;
-            this.axios.post('http://34.126.110.103:8080/uetshare/subject', this.subjectData, category_id).then((response) => {
+            this.subjectData.category.id = this.category.CategoryID;
+            this.axios.post('http://34.126.110.103:8080/uetshare/subject', this.subjectData).then((response) => {
             if (response) {
               alert("Thêm thành công");
               this.getDataSubject();
