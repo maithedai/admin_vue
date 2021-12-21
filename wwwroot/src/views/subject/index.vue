@@ -179,7 +179,9 @@ export default {
 
         handleDelete(item, id) {
           this.axios.delete('http://34.126.110.103:8080/uetshare/subject/' + id, item).then((response) => {
-              if (response) {
+              if (response.data.success == false) {
+                alert("This subject is used!");
+              } else {
                 alert("Xóa thành công");
                 this.getDataSubject();
               }

@@ -30,19 +30,7 @@
                     </td>
                     <td class="td-re">
                         <div v-if="!isEdit || item.id != idItem"> {{ item.type }} </div>
-                        <!-- <Input style="width: 75%" class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.type"/> -->
-                        <Dropdown
-                            v-if="isEdit && item.id == idItem"
-                            class="pl-3 pr-3"
-                            :title="type.name"
-                            :options="type"
-                            :keyName="'name'"
-                            :keyID="'id'"
-                            @required-data="type"
-                            :labelName="type.name"
-                            placeholder="Chọn Type"
-                            @select="selectType">
-                        </Dropdown>
+                        <Input style="width: 75%" class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.type"/>
                     </td>
                     <td class="td-re" > 
                         <div v-if="!isEdit || item.id != idItem"> {{ item.subjectDto.subject_name }} </div>
@@ -53,6 +41,7 @@
                             :title="subject.subjectName"
                             :options="listSubject"
                             :keyName="'subject_name'"
+                            :keyID="'id'"
                             @required-data="getDataSubject"
                             :labelName="subject.subjectName"
                             placeholder="Chọn Subject"
@@ -108,10 +97,6 @@ export default {
                 subjectID: null,
                 subjectName: null
             },
-            type: [
-                { name: 'DOCUMENT', value: 'DOCUMENT'},
-                { name: 'EXAM', value: 'EXAM'},
-            ]
         }
     },
 
@@ -168,11 +153,6 @@ export default {
         selectSubject(data) {
             this.subject.subjectName = data.subject_name;
             this.subject.subjectID = data.id;
-        },
-
-        selectType(data) {
-            debugger
-            this.type.name = data.name;
         },
     },
 }
