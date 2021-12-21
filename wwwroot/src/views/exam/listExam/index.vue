@@ -4,8 +4,37 @@
         <div class="title">List Exam Document</div>
         <div class="top-action">
             <div class="nav-input-right">
-            <SearchInput v-debounce:800="searchData" placeholder="Search Exam..."></SearchInput>
-            <Input fieldName="category" placeholder="Exam..."/>
+              <SearchInput style="width: 15%" v-debounce:800="searchData" placeholder="Search Exam..."></SearchInput>
+              <Input style="width: 15%" fieldName="category" placeholder="Exam..." v-model="nameExam"/>
+              <div class="upload">
+                 <button class="d-btn d-btn-icon d-btn-primary" @click="uploadFile">
+                    <i class="el-icon-upload"></i>
+                    Upload
+                </button>
+                <input style="display: none;" type='file' ref="fileCreateUpload" @change="selectFile"/>
+                <div class="file-select"> {{ nameFileUpload }}</div>
+              </div>
+              <Dropdown
+                  class="pl-3 pr-3"
+                  :title="type.name"
+                  :options="listType"
+                  :keyName="'name'"
+                  :keyID="'id'"
+                  :labelName="type.name"
+                  placeholder="Chọn Type"
+                  @select="selectType">
+              </Dropdown>
+              <Dropdown
+                  class="pl-3 pr-3"
+                  :title="subject.subjectName"
+                  :options="listSubject"
+                  :keyName="'subject_name'"
+                  :keyID="'id'"
+                  @required-data="getDataSubject"
+                  :labelName="subject.subjectName"
+                  placeholder="Chọn Subject"
+                  @select="selectSubject">
+              </Dropdown>
             </div>
             <div class="float-right">
             <button class="d-btn d-btn-icon d-btn-success" @click="addData()">
@@ -36,18 +65,36 @@
   import Input from "../../../components/Input.vue"
   import Paging from "../../../components/Paging.vue"
   import TableContentExam from "../../TableContentExam.vue"
+  import Dropdown from '@/components/dropdown'
 
 export default {
     components: {
       TableContentExam,
       SearchInput,
       Input,
-      Paging
+      Paging,
+      Dropdown
     },
     data() {
       return {
         listData: {},
         totalPage: 0,
+        nameFileUpload: null,
+        nameExam: null,
+        subject_id: 0,
+        listType: [
+          {name: "DOCUMENT", id: 1},
+          {name: "EXAM", id: 2},
+        ],
+        type: {
+          name: null,
+          id: null,
+        },
+        listSubject: null,
+        subject: {
+            subjectID: null,
+            subjectName: null
+        },
       }
     },
     
@@ -96,6 +143,62 @@ export default {
         }).catch((error) => {
           console.log(error);
         });
+      },
+
+      uploadFile() {
+        this.$refs.fileCreateUpload.click();
+      },
+
+      selectFile() {
+        this.nameFileUpload = this.$refs.fileCreateUpload.files[0].name;
+        if (this.nameFileUpload.length > 20) {
+          this.nameFileUpload = this.nameFileUpload.substring(0, 16) + "...";
+        }
+      },
+
+      getDataSubject() {
+        var me = this;
+        this.axios.get('http://34.126.110.103:8080/uetshare/subject?index=1').then((response) => {
+          if (response) {
+              me.listSubject = response.data.subjectDtoList;
+          }
+        }).catch((error) => {
+            console.log(error);
+        });
+      },
+
+      selectSubject(data) {
+        this.subject.subjectName = data.subject_name;
+        this.subject.subjectID = data.id;
+      },
+
+      selectType(data) {
+        this.type.name = data.name;
+        this.type.id = data.id;
+      },
+
+      addData() {
+        var form = new FormData();
+        if (this.$refs.fileCreateUpload.files[0]) {
+          form.append("file", this.$refs.fileCreateUpload.files[0], this.$refs.fileCreateUpload.files[0].name);
+        }
+        var obj = `{
+                    "examDocumentType": " ` + this.type.name + `",
+                    "name": "` + this.nameExam + `",
+                    "account": {"id": 1},
+                    "subject": {"id": ` + this.subject.subjectID + `},
+                  }`;
+
+        form.append("ExamDocument", obj);
+        console.log(form)
+        this.axios.post('http://34.126.110.103:8080/uetshare/exam-document', form).then((response) => {
+          if (response) {
+              alert("Thêm thành công");
+              this.getDataList();
+          }
+        }).catch((error) => {
+            console.log(error);
+        });
       }
     }
 }
@@ -127,7 +230,20 @@ export default {
 
   .nav-input-right {
     display: flex;
-    min-width: 650px;
+    min-width: 70%;
     justify-content: space-between;
+  }
+
+  .upload {
+    display: flex;
+    width: auto;
+  }
+
+  .file-select {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    margin-left: 4px;
   }
 </style>

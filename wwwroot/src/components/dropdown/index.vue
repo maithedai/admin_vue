@@ -55,8 +55,8 @@ export default {
             default: "value"
         },
         keyID: {
-            type: Number,
-            default: 0
+            type: String,
+            default: null
         },
         // cho phép nhập để filter
         filterable: {
