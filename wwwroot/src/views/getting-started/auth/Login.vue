@@ -121,10 +121,10 @@ export default {
      * Xử lý login
      */
     async handleLogin() {
-      this.showLoading();
+      // this.showLoading();
       // var hasedPass = this.bcryptEncode(this.password);
-      var loginRes = await AuthService.login(this.email, this.password);
-      this.hideLoading();
+      // var loginRes = await AuthService.login(this.email, this.password);
+      // this.hideLoading();
 
       // nếu đăng nhập thành công
       if(loginRes.data && loginRes.data.Success) {
