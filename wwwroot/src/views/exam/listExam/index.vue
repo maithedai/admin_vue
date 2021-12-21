@@ -21,9 +21,9 @@
         </div>
 
         <div class="content mt-3">
-            <TableContentExam :nameList="'Name'" :listData="listData"/>
+            <TableContentExam :nameList="'Name'" :listData="listData" @editExamDocument="editExamDocument"/>
         </div>
-        <Paging :page-count="20" :page-range="2" :margin-pages="2"/>
+        <Paging :page-count="totalPage" :page-range="2" :margin-pages="2"/>
     </div>
 </template>
 
@@ -47,6 +47,7 @@ export default {
     data() {
       return {
         listData: {},
+        totalPage: 0,
       }
     },
     
@@ -60,9 +61,10 @@ export default {
        */
       getDataList() {
         var me = this;
-        this.axios.get('http://34.126.110.103:8080/uetshare/exam-document/subject/1?type=DOCUMENT&index=1').then((response) => {
+        this.axios.get('http://34.126.110.103:8080/uetshare/exam-document/search?index=1').then((response) => {
             if (response) {
-              me.listData = response.data.examDocumentDtoList
+              me.listData = response.data.examDocumentDtoList;
+              me.totalPage = response.data.total_page;
             }
         }).catch((error) => {
             console.log(error);
@@ -72,17 +74,29 @@ export default {
       searchData(val) {
         var me = this;
         if (val != ''){
-          this.axios.get('http://34.126.110.103:8080/uetshare/exam-document/subject/1?type=DOCUMENT&index=1&text' + val).then((response) => {
+          this.axios.get('http://34.126.110.103:8080/uetshare/exam-document/search?index=1&text=' + val).then((response) => {
           if (response) {
             me.listData = response.data.examDocumentDtoList;
+            me.totalPage = response.data.total_page;
           }
           }).catch((error) => {
             console.log(error);
           });
         }else {
-          this.getDataCategory();
+          this.getDataList();
         }
       },
+
+      editExamDocument(form, id) {
+        this.axios.put('http://34.126.110.103:8080/uetshare/exam-document/' + id, form).then((response) => {
+        if (response) {
+          alert("sửa thành công!");
+          this.getDataList();
+        }
+        }).catch((error) => {
+          console.log(error);
+        });
+      }
     }
 }
 </script>

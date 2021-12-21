@@ -26,6 +26,10 @@
                             <i class="el-icon-check"></i>
                             Save
                         </button>
+                        <button class="d-btn d-btn-icon d-btn-danger pl-2" onClick="return confirm('are you sure?');" @click="deleteSubject">
+                          <i class="el-icon-delete" />
+                          Delete
+                        </button>
                     </td>
                 </tr>
             </tbody>
@@ -79,14 +83,16 @@ export default {
             this.idItem = item.id;
         },
 
-        deleteSubject() {
-            console.log(this.idItem);
-        },
 
         actionSaveDateEdit() {
             var item = this.listData.find(x => x.id == this.idItem);
             this.$emit("saveDataEdit", item, this.idItem);
             this.isEdit = false;
+        },
+
+        deleteSubject() {
+          var item = this.listData.find(x => x.id == this.idItem);
+          this.$emit("handleDelete", item, this.idItem);
         }
     },
 }
@@ -140,7 +146,7 @@ td {
 }
 
 .action-edit {
-    width: 150px;
+    width: 250px;
     text-align: center;
 }
 

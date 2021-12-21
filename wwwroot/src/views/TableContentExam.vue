@@ -14,30 +14,57 @@
             <tbody v-if="listData && listData.length > 0">
                 <tr v-for="(item, index) in listData" :key="index" :class="{'item-active': item.id == idItem}" @click="selectedItem(item)">
                     <td> {{ item.id }} </td>
-                    <td class="td-re"> 
-                        {{ item.name }} 
+                    <td class="td-re">  
+                        <div v-if="!isEdit || item.id != idItem"> {{ item.name }} </div>
                         <Input class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.name"/>
                     </td>
                     <td class="td-re"> 
                         <a :href="'http://34.126.110.103:8080/uetshare/image' + item.link" target="_blank" style="cursor: pointer; color: #007bff !important;">
                             {{ item.file_name }}
                         </a>
-                        <Input class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.link"/>
+                        <button v-if="isEdit && item.id == idItem" class="d-btn d-btn-icon d-btn-primary" @click="uploadFile(index)">
+                            <i class="el-icon-upload"></i>
+                            Upload
+                        </button>
+                        <input style="display: none;" type='file' ref="fileUpload"/>
                     </td>
                     <td class="td-re">
-                        {{ item.type }} 
-                        <Input style="width: 75%" class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.type"/>
+                        <div v-if="!isEdit || item.id != idItem"> {{ item.type }} </div>
+                        <!-- <Input style="width: 75%" class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.type"/> -->
+                        <Dropdown
+                            v-if="isEdit && item.id == idItem"
+                            class="pl-3 pr-3"
+                            :title="type.name"
+                            :options="type"
+                            :keyName="'name'"
+                            :keyID="'id'"
+                            @required-data="type"
+                            :labelName="type.name"
+                            placeholder="Chọn Type"
+                            @select="selectType">
+                        </Dropdown>
                     </td>
                     <td class="td-re" > 
-                        {{ item.subjectDto.subject_name }}
-                        <Input style="width: 75%" class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.subjectDto.subject_name"/>
+                        <div v-if="!isEdit || item.id != idItem"> {{ item.subjectDto.subject_name }} </div>
+                        <!-- <Input style="width: 75%" class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.subjectDto.subject_name"/> -->
+                        <Dropdown
+                            v-if="isEdit && item.id == idItem"
+                            class="pl-3 pr-3"
+                            :title="subject.subjectName"
+                            :options="listSubject"
+                            :keyName="'subject_name'"
+                            @required-data="getDataSubject"
+                            :labelName="subject.subjectName"
+                            placeholder="Chọn Subject"
+                            @select="selectSubject">
+                        </Dropdown>
                     </td>
                     <td class="action-edit" style="background-color: #f9fafa;">
                         <button v-if="!isEdit || item.id != idItem" class="d-btn d-btn-icon d-btn-primary" @click="actionEdit">
                             <i class="el-icon-edit"></i>
                             Edit
                         </button>
-                        <button v-if="isEdit && item.id == idItem" class="d-btn d-btn-icon d-btn-success" @click="actionSaveDateEdit">
+                        <button v-if="isEdit && item.id == idItem" class="d-btn d-btn-icon d-btn-success" @click="actionSaveDateEdit(index)">
                             <i class="el-icon-check"></i>
                             Save
                         </button>
@@ -55,10 +82,12 @@
 <script>
 
 import Input from "../components/Input.vue"
+import Dropdown from '@/components/dropdown'
 
 export default {
     components: {
         Input,
+        Dropdown
     },
     props: {
         listData: {
@@ -68,12 +97,21 @@ export default {
         nameList: {
             Type: String,
             default: '',
-        }
+        },
     },
     data() {
         return {
             idItem: 0,
             isEdit: false,
+            listSubject: null,
+            subject: {
+                subjectID: null,
+                subjectName: null
+            },
+            type: [
+                { name: 'DOCUMENT', value: 'DOCUMENT'},
+                { name: 'EXAM', value: 'EXAM'},
+            ]
         }
     },
 
@@ -94,10 +132,47 @@ export default {
             this.idItem = item.id;
         },
         
-        actionSaveDateEdit() {
-            var item = this.listData.find(x => x.id == this.idItem);
-            this.$emit("saveDataEdit", item, this.idItem);
+        actionSaveDateEdit(index) {
             this.isEdit = false;
+            this.listData[index].subject_id = this.subject.subjectID;
+            var form = new FormData();
+            if (this.$refs.fileUpload[index].files[0]) {
+                form.append("file", this.$refs.fileUpload[index].files[0], this.$refs.fileUpload[index].files[0].name);
+            }
+            var x = this.listData[index];
+            var obj = `{
+                        "examDocumentType": "DOCUMENT",
+                        "name": "` + x.name + `",
+                        "account": {"id": 1},
+                        "subject": {"id": ` + x.subject_id + `}
+                    }`;
+            form.append("ExamDocument", obj);
+            this.$emit("editExamDocument", form, this.idItem);
+        },
+
+        uploadFile(index) {
+            this.$refs.fileUpload[index].click();
+        },
+
+        getDataSubject() {
+          var me = this;
+          this.axios.get('http://34.126.110.103:8080/uetshare/subject?index=1').then((response) => {
+            if (response) {
+                me.listSubject = response.data.subjectDtoList;
+            }
+          }).catch((error) => {
+              console.log(error);
+          });
+        },
+
+        selectSubject(data) {
+            this.subject.subjectName = data.subject_name;
+            this.subject.subjectID = data.id;
+        },
+
+        selectType(data) {
+            debugger
+            this.type.name = data.name;
         },
     },
 }
