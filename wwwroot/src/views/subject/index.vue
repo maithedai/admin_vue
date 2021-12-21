@@ -143,7 +143,8 @@ export default {
 
         saveData() {
           if(this.subjectData["subject_name"] != null && this.category.CategoryID != null) {
-            this.axios.post('http://34.126.110.103:8080/uetshare/subject', this.subjectData, this.category).then((response) => {
+            let category_id = this.category.id;
+            this.axios.post('http://34.126.110.103:8080/uetshare/subject', this.subjectData, category_id).then((response) => {
             if (response) {
               alert("Thêm thành công");
               this.getDataSubject();
