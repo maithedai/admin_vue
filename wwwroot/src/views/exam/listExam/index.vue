@@ -22,7 +22,8 @@
                   :keyID="'id'"
                   :labelName="type.name"
                   placeholder="Chọn Type"
-                  @select="selectType">
+                  @select="selectType"
+                  @clear-select="clearType">
               </Dropdown>
               <Dropdown
                   class="pl-3 pr-3"
@@ -33,7 +34,8 @@
                   @required-data="getDataSubject"
                   :labelName="subject.subjectName"
                   placeholder="Chọn Subject"
-                  @select="selectSubject">
+                  @select="selectSubject"
+                  @clear-select="clearSubject">
               </Dropdown>
             </div>
             <div class="float-right">
@@ -199,6 +201,16 @@ export default {
         }).catch((error) => {
             console.log(error);
         });
+      },
+
+      clearType() {
+        this.type.name = null;
+        this.type.id = null;
+      },
+
+      clearSubject() {
+        this.subject.subjectName = null;
+        this.subject.subjectID = null;
       }
     }
 }

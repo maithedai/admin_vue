@@ -39,7 +39,8 @@
                             :keyID="'id'"
                             :labelName="type.name"
                             placeholder="Chọn Type"
-                            @select="selectType">
+                            @select="selectType"
+                            @clear-select="clearType">
                         </Dropdown>
                     </td>
                     <td class="td-re" > 
@@ -55,7 +56,8 @@
                             @required-data="getDataSubject"
                             :labelName="subject.subjectName"
                             placeholder="Chọn Subject"
-                            @select="selectSubject">
+                            @select="selectSubject"
+                            @clear-select="clearSubject">
                         </Dropdown>
                     </td>
                     <td class="action-edit" style="background-color: #f9fafa;">
@@ -178,6 +180,16 @@ export default {
             this.type.name = data.name;
             this.type.id = data.id;
         },
+
+        clearType() {
+            this.type.name = null;
+            this.type.id = null;
+        },
+
+        clearSubject() {
+            this.subject.subjectName = null;
+            this.subject.subjectID = null;
+        }
     },
 }
 </script>
