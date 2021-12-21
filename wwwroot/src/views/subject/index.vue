@@ -33,6 +33,7 @@
     <div class="content mt-3">
       <TableSubjectContent :nameList="'Subject'" :listData="listData" ref="TableSubjectContent" @handleDelete="handleDelete" @saveDataEdit="saveDataEdit"/>
     </div>
+    <Paging :page-count="totalPage" :page-range="2" :margin-pages="2" @changePageCurent="changePageCurent"/>
   </div>
 </template>
 
@@ -48,6 +49,7 @@ export default {
     return {
       //list category
         list: [],
+        totalPage: 1,
         listData: {},
         subjectData: {
           subject_name: null,
@@ -87,6 +89,7 @@ export default {
           this.axios.get('http://34.126.110.103:8080/uetshare/subject/search?index=1').then((response) => {
               if (response) {
                   me.listData = response.data.subjectDtoList;
+                  me.totalPage = response.data.total_page;
               }
           }).catch((error) => {
               console.log(error);
@@ -212,8 +215,18 @@ export default {
         clearCategory() {
           this.category.CategoryName = null;
           this.category.CategoryID = null;
-        }
+        },
 
+        changePageCurent(page) {
+          var me = this;
+          this.axios.get('http://34.126.110.103:8080/uetshare/subject/search?index=' + page).then((response) => {
+              if (response) {
+                me.listData = response.data.subjectDtoList
+              }
+          }).catch((error) => {
+              console.log(error);
+          });
+        }
    }
 }
 </script>
@@ -239,7 +252,7 @@ export default {
 }
 
 .subject .content {
-  height: calc(100% - 46px - 40px - 13px);
+  height: calc(100vh - 225px);
 }
 
 .nav-input-right {
