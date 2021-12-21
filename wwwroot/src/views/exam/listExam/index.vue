@@ -188,7 +188,7 @@ export default {
                     "examDocumentType": " ` + this.type.name + `",
                     "name": "` + this.nameExam + `",
                     "account": {"id": 1},
-                    "subject": {"id": ` + this.subject.subjectID + `},
+                    "subject": {"id": ` + this.subject.subjectID + `}
                   }`;
 
         form.append("ExamDocument", obj);
