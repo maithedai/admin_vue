@@ -147,10 +147,10 @@ export default {
             }
             var x = this.listData[index];
             var obj = `{
-                        "examDocumentType": " ` + this.type.name ? null: x.type + `",
+                        "examDocumentType": " ` + x.type + `",
                         "name": "` + x.name + `",
                         "account": {"id": 1},
-                        "subject": {"id": ` + x.subject_id + `},
+                        "subject": {"id": ` + x.subject_id + `}
                     }`;
             form.append("ExamDocument", obj);
             this.$emit("editExamDocument", form, this.idItem);
