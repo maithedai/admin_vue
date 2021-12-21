@@ -44,22 +44,22 @@ export default {
                   name: "Category",
                   baseUrl: "/category",
                   url: "/category",
-                  // icon: "",
-                  // iconActive: "",
+                  icon: "icon-category.png",
+                  iconActive: "icon-category-blue.png",
                 },
                 {
                   name: "Subject",
                   baseUrl: "/subject",
                   url: "/subject",
-                  // icon: "",
-                  // iconActive: "",
+                  icon: "icon-brand.png",
+                  iconActive: "icon-brand-blue.png",
                 },
                 {
                   name: "Exam document",
                   baseUrl: "/exam",
                   url: "/exam",
-                  // icon: "",
-                  // iconActive: "",
+                  icon: "icon-file.png",
+                  iconActive: "icon-file.png",
                 },
             ]
         }
@@ -71,7 +71,7 @@ export default {
 
     created() {
         var userInfo = this.getUserInfo();
-        
+
         this.setCurrentTab();
         // lấy trạng thái từ storage
         this.handleCollapse(true);
