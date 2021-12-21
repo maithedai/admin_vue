@@ -9,7 +9,7 @@ const modules = [
     {
         path: '/',
         name: 'default',
-        redirect: "/home",
+        redirect: "/login",
     },
     user,
     gettingstarted,

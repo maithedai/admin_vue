@@ -1,7 +1,7 @@
 <template>
   <div class="topbar">
     <div class="left-content">
-      <img class="logo" @click="goto('/home')" src="@/assets/icon/exam_icon.png" title="Trang chủ"/>
+      <img class="logo" src="@/assets/icon/exam_icon.png" title="Trang chủ"/>
     </div>
 
     <div class="right-content">

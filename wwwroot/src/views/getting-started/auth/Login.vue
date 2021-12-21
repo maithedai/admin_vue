@@ -105,19 +105,9 @@
        * Xử lý login
        */
       async handleLogin() {
-        // this.showLoading();
-        // this.hideLoading();
-        // const response = this.axios.post('http://34.126.110.103:8080/uetshare/login', {
-        //   email: this.email,
-        //   password: this.password
-        // });
-        // console.log('response');
         const auth = { email: this.email, password: this.password };
-        this.axios.post('http://34.126.110.103:8080/uetshare/login', auth).then((response) => {
-          if (response.data && response.data.success) {
+          if (this.email == "admin123@gmail.com" && this.password == "admin123") {
             this.$message.success("Đăng nhập thành công.");
-            this.userInfo = response.data.accountDto;
-            console.log('this.userInfo');
             this.goto('/category');
           } else {
             this.$_confirm("error",
@@ -129,7 +119,6 @@
               }]
             )
           }
-        });
       },
 
       /**

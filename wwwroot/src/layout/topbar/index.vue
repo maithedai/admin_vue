@@ -1,6 +1,6 @@
 <template>
   <div class="topbar">
-    <div class="left-content" @click="goto('/')">
+    <div class="left-content">
       <img class="logo"  src="@/assets/icon/exam_icon.png" />
       <span class="admin">ADMIN PAGE</span>
     </div>
@@ -9,18 +9,19 @@
 
       <div class="user-form">
         <!-- avatar user nếu đã đăng nhập -->
-        <div class="user-panel" v-if="!isGettingRouter" >  <!-- v-if="isLoggedIn" -->        
+        <div class="user-panel" v-if="!isGettingRouter" >  <!-- v-if="isLoggedIn" -->
           <el-dropdown @command="handleClickDropdown" trigger="click">
             <div class="account">
               <img class="avatar" src="@/assets/icon/avatar-default.png" />
               <!-- <span>{{ user && user.FullName ? user.FullName : user.Email }}</span> -->
+              <span>Admin</span>
               <i class="el-icon-arrow-down fs-15p" />
             </div>
             <el-dropdown-menu class="" slot="dropdown">
-              <el-dropdown-item command="userInfo"
+              <!-- <el-dropdown-item command="userInfo"
                 ><img src="@/assets/icon/users.png" class="mr-2"/> Thông tin tài
                 khoản</el-dropdown-item
-              >
+              > -->
               <el-dropdown-item command="logout"
                 ><img src="@/assets/icon/icon-logout.png" class="mr-2"/> Đăng Xuất</el-dropdown-item
               >
@@ -65,8 +66,8 @@ export default {
           this.goto("/profile");
           break;
         case "logout":
-          localStorage.removeItem('d_token');
-          this.redirect("/")
+          // localStorage.removeItem('d_token');
+          this.redirect("/login")
           break;
       }
     },
