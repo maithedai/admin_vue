@@ -31,18 +31,6 @@
                     <td class="td-re">
                         <div v-if="!isEdit || item.id != idItem"> {{ item.type }} </div>
                         <Input style="width: 75%" class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.type"/>
-                        <!-- <Dropdown
-                            v-if="isEdit && item.id == idItem"
-                            class="pl-3 pr-3"
-                            :title="type.name"
-                            :options="type"
-                            :keyName="'name'"
-                            :keyID="'id'"
-                            @required-data="type.name"
-                            :labelName="type.name"
-                            placeholder="Chọn Type"
-                            @select="selectType">
-                        </Dropdown> -->
                     </td>
                     <td class="td-re" > 
                         <div v-if="!isEdit || item.id != idItem"> {{ item.subjectDto.subject_name }} </div>
@@ -109,10 +97,6 @@ export default {
                 subjectID: null,
                 subjectName: null
             },
-            type: [
-                { name: 'DOCUMENT', id: 1},
-                { name: 'EXAM', id: 2},
-            ]
         }
     },
 
@@ -169,13 +153,6 @@ export default {
         selectSubject(data) {
             this.subject.subjectName = data.subject_name;
             this.subject.subjectID = data.id;
-        },
-
-        selectType(data) {
-            console.log(data)
-            this.type.name = data.name;
-            this.type.id = data.id;
-            console.log(this.type.id)
         },
     },
 }
