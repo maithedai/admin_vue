@@ -1,6 +1,5 @@
 <template>
     <div class="getting-started">
-        
     </div>
 </template>
 
@@ -29,7 +28,7 @@ export default {
 
 <style scoped>
 .getting-started {
-    width: 100vw;
-}
+    width: 100%;
 
+}
 </style>
