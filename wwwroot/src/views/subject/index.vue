@@ -143,7 +143,8 @@ export default {
 
         saveData() {
           if(this.subjectData["subject_name"] != null && this.category.CategoryID != null) {
-            this.axios.post('http://34.126.110.103:8080/uetshare/subject', this.subjectData, this.category).then((response) => {
+            let category_id = this.category.id;
+            this.axios.post('http://34.126.110.103:8080/uetshare/subject', this.subjectData, category_id).then((response) => {
             if (response) {
               alert("Thêm thành công");
               this.getDataSubject();
@@ -179,7 +180,9 @@ export default {
 
         handleDelete(item, id) {
           this.axios.delete('http://34.126.110.103:8080/uetshare/subject/' + id, item).then((response) => {
-              if (response) {
+              if (response.data.success == false) {
+                alert("This subject is used!");
+              } else {
                 alert("Xóa thành công");
                 this.getDataSubject();
               }
