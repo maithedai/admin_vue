@@ -43,16 +43,16 @@
                 <i class="el-icon-plus" />
                 Add
             </button>
-            <button class="d-btn d-btn-icon d-btn-danger" @click="deleteData()">
+            <!-- <button class="d-btn d-btn-icon d-btn-danger" @click="deleteData()">
                 <i class="el-icon-delete" />
                 Delete
-            </button>
+            </button> -->
             </div>
         </div>
         </div>
 
         <div class="content mt-3">
-            <TableContentExam :nameList="'Name'" :listData="listData" @editExamDocument="editExamDocument"/>
+            <TableContentExam :nameList="'Name'" :listData="listData" @handleDelete="handleDelete" @editExamDocument="editExamDocument"/>
         </div>
         <Paging :page-count="totalPage" :page-range="2" :margin-pages="2"/>
     </div>
@@ -211,7 +211,39 @@ export default {
       clearSubject() {
         this.subject.subjectName = null;
         this.subject.subjectID = null;
-      }
+      },
+
+      popupWarningDeleteCategory(data) {
+            this.$_confirm("warning",
+                "Warning!",
+                'Do you want to delete this subject??',
+                [
+                    {
+                        label: "Cancel",
+                        class: "d-btn-outline",
+                    },
+                    {
+                        label: "Delete",
+                        class: "d-btn-danger",
+                        callback: this.handleDelete,
+                        params: [data]
+                    }
+                ]
+            );
+        },
+
+      handleDelete(item, id) {
+        console.log('id: ', id)
+        this.axios.delete('http://34.126.110.103:8080/uetshare/exam-document/' + id, item).then((response) => {
+            
+          alert("Xóa thành công");
+          this.getDataList();
+            
+        }).catch((error) => {
+            console.log(error);
+        });
+        }
+
     }
 }
 </script>

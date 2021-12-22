@@ -187,7 +187,7 @@ export default {
         handleDelete(item, id) {
           this.axios.delete('http://34.126.110.103:8080/uetshare/subject/' + id, item).then((response) => {
               if (response.data.success == false) {
-                alert("This subject is used!");
+                alert("Môn học này đã được sử dụng!");
               } else {
                 alert("Xóa thành công");
                 this.getDataSubject();

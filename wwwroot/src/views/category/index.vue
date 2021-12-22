@@ -12,16 +12,16 @@
             <i class="el-icon-plus" />
             Add
           </button>
-          <button class="d-btn d-btn-icon d-btn-danger" @click="deleteData()">
+          <!-- <button class="d-btn d-btn-icon d-btn-danger" @click="deleteData()">
             <i class="el-icon-delete" />
             Delete
-          </button>
+          </button> -->
         </div>
       </div>
     </div>
 
     <div class="content mt-3">
-      <TableContent :nameList="'Category'" :listData="listData" ref="TableContent" @saveDataEdit="saveDataEdit"/>
+      <TableContent :nameList="'Category'" :listData="listData" ref="TableContent" @handleDelete="handleDelete" @saveDataEdit="saveDataEdit"/>
     </div>
     <Paging :page-count="totalPage" :page-range="2" :margin-pages="2" @changePageCurent="changePageCurent"/>
   </div>
@@ -103,9 +103,9 @@
       /**
        * xóa 1 category
        */
-      async handleDelete(data) {
+      // async handleDelete(data) {
 
-      },
+      // },
 
       /**
        * xử lý sau khi lưu thành công
@@ -151,6 +151,20 @@
           this.getDataCategory();
         }
       },
+
+       handleDelete(item, id) {
+         
+          this.axios.delete('http://34.126.110.103:8080/uetshare/category/' + id, item).then((response) => {
+              if (response.data.success == false) {
+                alert("Thể loại này đã được sử dụng!");
+              } else {
+                alert("Xóa thành công");
+                this.getDataCategory();
+              }
+          }).catch((error) => {
+              console.log(error);
+          });
+        },
 
       saveDataEdit(item, id) {
         this.axios.put('http://34.126.110.103:8080/uetshare/category/' + id, item).then((response) => {

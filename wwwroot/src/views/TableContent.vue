@@ -26,6 +26,10 @@
                             <i class="el-icon-check"></i>
                             Save
                         </button>
+                         <button class="d-btn d-btn-icon d-btn-danger pl-2" onClick="return confirm('Bạn có chắc muốn xóa bản ghi này?');" @click="deleteCategory(item)">
+                          <i class="el-icon-delete" />
+                          Delete
+                        </button>
                     </td>
                 </tr>
             </tbody>
@@ -87,6 +91,12 @@ export default {
             var item = this.listData.find(x => x.id == this.idItem);
             this.$emit("saveDataEdit", item, this.idItem);
             this.isEdit = false;
+        },
+
+        deleteCategory(item) {
+            
+            var item = this.listData.find(x => x.id == item.id);
+            this.$emit("handleDelete", item, item.id);
         }
     },
 }

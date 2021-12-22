@@ -69,6 +69,10 @@
                             <i class="el-icon-check"></i>
                             Save
                         </button>
+                        <button class="d-btn d-btn-icon d-btn-danger pl-2" onClick="return confirm('Bạn có chắc muốn xóa bản ghi này?');" @click="deleteExamDocument(item)">
+                          <i class="el-icon-delete" />
+                          Delete
+                        </button>
                     </td>
                 </tr>
             </tbody>
@@ -200,6 +204,11 @@ export default {
         clearSubject() {
             this.subject.subjectName = null;
             this.subject.subjectID = null;
+        },
+
+        deleteExamDocument(item) {
+          var item = this.listData.find(x => x.id == item.id);
+          this.$emit("handleDelete", item, item.id);
         }
     },
 }

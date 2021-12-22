@@ -26,7 +26,7 @@
                             <i class="el-icon-check"></i>
                             Save
                         </button>
-                        <button class="d-btn d-btn-icon d-btn-danger pl-2" onClick="return confirm('are you sure?');" @click="deleteSubject">
+                        <button class="d-btn d-btn-icon d-btn-danger pl-2" onClick="return confirm('Bạn có chắc muốn xóa bản ghi này?');" @click="deleteSubject(item)">
                           <i class="el-icon-delete" />
                           Delete
                         </button>
@@ -90,9 +90,10 @@ export default {
             this.isEdit = false;
         },
 
-        deleteSubject() {
-          var item = this.listData.find(x => x.id == this.idItem);
-          this.$emit("handleDelete", item, this.idItem);
+        deleteSubject(item) {
+
+            var item = this.listData.find(x => x.id == item.id);
+            this.$emit("handleDelete", item, item.id);
         }
     },
 }
