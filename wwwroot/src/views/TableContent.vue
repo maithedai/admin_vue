@@ -150,7 +150,7 @@ td {
 }
 
 .action-edit {
-    width: 150px;
+    width: 250px;
     text-align: center;
 }
 
