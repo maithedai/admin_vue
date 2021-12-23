@@ -54,7 +54,10 @@
         <div class="content mt-3">
             <TableContentExam :nameList="'Name'" :listData="listData" @handleDelete="handleDelete" @editExamDocument="editExamDocument"/>
         </div>
-        <Paging :page-count="totalPage" :page-range="2" :margin-pages="2"/>
+        <div>
+            <Paging style="margin-top:80px" :page-count="totalPage" :page-range="2" :margin-pages="2" @changePageCurent="changePageCurent"/>
+        </div>
+        
     </div>
 </template>
 
@@ -242,6 +245,17 @@ export default {
         }).catch((error) => {
             console.log(error);
         });
+        },
+      
+       changePageCurent(page) {
+          var me = this;
+          this.axios.get('http://34.126.110.103:8080/uetshare/exam-document/search?index=' + page).then((response) => {
+              if (response) {
+                me.listData = response.data.examDocumentDtoList
+              }
+          }).catch((error) => {
+              console.log(error);
+          });
         }
 
     }

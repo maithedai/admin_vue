@@ -23,7 +23,10 @@
     <div class="content mt-3">
       <TableContent :nameList="'Category'" :listData="listData" ref="TableContent" @handleDelete="handleDelete" @saveDataEdit="saveDataEdit"/>
     </div>
-    <Paging :page-count="totalPage" :page-range="2" :margin-pages="2" @changePageCurent="changePageCurent"/>
+    <div>
+        <Paging style="margin-top:80px" :page-count="totalPage" :page-range="2" :margin-pages="2" @changePageCurent="changePageCurent"/>
+    </div>
+    
   </div>
 </template>
 
