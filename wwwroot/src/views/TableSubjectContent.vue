@@ -16,13 +16,31 @@
                         {{ item.subject_name }}
                         <Input class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.subject_name"/>
                     </td>
-                    <td> {{ item.categoryDto.category }} </td>
+                    <!-- <td> {{ item.categoryDto.category }} </td> -->
+                    <td class="td-re" > 
+                        <div v-if="!isEdit || item.id != idItem"> {{ item.categoryDto.category }} </div>
+                        <!-- <Input style="width: 75%" class="input-edit" v-if="isEdit && item.id == idItem" v-model="item.subjectDto.subject_name"/> -->
+                        <Dropdown
+                            v-if="isEdit && item.id == idItem"
+                            class="pl-3 pr-3"
+                            :title="category.categoryName"
+                            :options="listCategory"
+                            :keyName="'category'"
+                            :keyID="'id'"
+                            @required-data="getDataCategory"
+                            :labelName="category.categoryName"
+                            placeholder="Chọn Category"
+                            @select="selectCategory"
+                            @clear-select="clearCategory">
+                        </Dropdown>
+                        
+                    </td>
                     <td class="action-edit" style="background-color: #f9fafa;">
                         <button v-if="!isEdit || item.id != idItem" class="d-btn d-btn-icon d-btn-primary" @click="actionEdit">
                             <i class="el-icon-edit"></i>
                             Edit
                         </button>
-                        <button v-if="isEdit && item.id == idItem" class="d-btn d-btn-icon d-btn-success" @click="actionSaveDateEdit">
+                        <button v-if="isEdit && item.id == idItem" class="d-btn d-btn-icon d-btn-success" @click="actionSaveDateEdit(index)">
                             <i class="el-icon-check"></i>
                             Save
                         </button>
@@ -44,10 +62,12 @@
 <script>
 
 import Input from "../components/Input.vue"
+import Dropdown from '@/components/dropdown'
 
 export default {
     components: {
         Input,
+        Dropdown
     },
     props: {
         listData: {
@@ -57,12 +77,24 @@ export default {
         nameList: {
             Type: String,
             default: '',
-        }
+        },
+        
     },
     data() {
         return {
             idItem: 0,
             isEdit: false,
+            listCategory: null,
+            category: {
+                categoryID: null,
+                categoryName: null
+            },
+            subjectData: {
+                subject_name: null,
+                category: {
+                    id: null
+                }
+            },
         }
     },
 
@@ -84,9 +116,11 @@ export default {
         },
 
 
-        actionSaveDateEdit() {
-            var item = this.listData.find(x => x.id == this.idItem);
-            this.$emit("saveDataEdit", item, this.idItem);
+        actionSaveDateEdit(index) {
+            this.isEdit = false;
+            // this.subjectData.subject_name = this.listData[index].subject_name
+            this.subjectData.category.id = this.category.categoryID;
+            this.$emit("saveDataEdit", this.subjectData, this.idItem);
             this.isEdit = false;
         },
 
@@ -94,7 +128,28 @@ export default {
 
             var item = this.listData.find(x => x.id == item.id);
             this.$emit("handleDelete", item, item.id);
-        }
+        },
+
+        getDataCategory() {
+          var me = this;
+          this.axios.get('http://34.126.110.103:8080/uetshare/category').then((response) => {
+            if (response) {
+                me.listCategory = response.data.categoryDtoList;
+            }
+          }).catch((error) => {
+              console.log(error);
+          });
+        },
+
+        selectCategory(data) {
+            this.category.categoryName = data.category;
+            this.category.categoryID = data.id;
+        },
+
+         clearCategory() {
+            this.category.categoryName = null;
+            this.category.categoryID = null;
+        },
     },
 }
 </script>

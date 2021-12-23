@@ -150,8 +150,7 @@ export default {
                 form.append("file", this.$refs.fileUpload[index].files[0], this.$refs.fileUpload[index].files[0].name);
             }
             var x = this.listData[index];
-            console.log(x.type)
-            console.log(this.type.name)
+
             if (this.type.name != null){
                  var obj = `{
                         "examDocumentType": "` + this.type.name  + `",
