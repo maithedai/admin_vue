@@ -277,6 +277,7 @@ td {
 }
 
 .td-re {
+    width: 350px;
     position: relative;
 }
 
